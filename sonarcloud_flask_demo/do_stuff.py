@@ -1,4 +1,5 @@
-from flask import Blueprint, Response
+from flask import Blueprint, Response, request
+from flask import redirect as flask_redirect
 
 do_stuff = Blueprint('cookies', __name__)
 
@@ -13,3 +14,10 @@ def index():
 def unsafe():
     response = Response('Hey there!')
     return response
+
+
+# http://localhost:5000/do_stuff/redirect1?url=https://www.sonarsource.com
+@do_stuff.route('/redirect1')
+def redirect1():
+    url = request.args["url"]
+    return flask_redirect(url)
